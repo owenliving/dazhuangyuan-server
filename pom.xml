@@ -20,6 +20,7 @@
 
     <properties>
         <java.version>11</java.version>
+        <lombok.version>1.18.30</lombok.version>
         <mybatis-plus.version>3.5.5</mybatis-plus.version>
         <hutool.version>5.8.25</hutool.version>
         <jjwt.version>0.9.1</jjwt.version>
