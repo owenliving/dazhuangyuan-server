@@ -1,6 +1,5 @@
 package com.dazhuangyuan.common;
 
-import com.dazhuangyuan.entity.User;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.BindException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
