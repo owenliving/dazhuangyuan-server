@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dazhuangyuan.mapper.AdmissionDataMapper">
+    <select id="selectCollegeAdmissionWithDetail" resultType="java.util.Map">
+        SELECT a.*, c.college_name, c.college_type, c.province, c.city,
+               g.group_code, g.group_name, g.require_subjects,
+               m.major_name, m.major_code
+        FROM dy_admission_data a
+        LEFT JOIN dy_college c ON a.college_id = c.id
+        LEFT JOIN dy_college_major_group g ON a.group_id = g.id
+        LEFT JOIN dy_major m ON a.major_id = m.id
+        WHERE a.college_id = #{collegeId}
+          <if test="province != null">AND a.province = #{province}</if>
+          <if test="category != null">AND a.category = #{category}</if>
+        ORDER BY a.year DESC, a.batch
+    </select>
+</mapper>

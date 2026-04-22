@@ -1,0 +1,13 @@
+# Zeabur 部署配置 - 大状元后端服务
+# 此文件放在 dazhuangyuan-server/ 目录下
+# 中国可访问，香港节点，原生支持 Spring Boot Maven 项目
+
+[build]
+buildCommand = "mvn clean package -DskipTests"
+
+[run]
+# -Xmx400m 限制内存，适配 Zeabur Starter Plan 免费额度
+startCommand = "java -Xmx400m -Xms128m -jar target/dazhuangyuan.jar"
+
+[service]
+name = "dazhuangyuan-server"

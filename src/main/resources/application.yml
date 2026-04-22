@@ -1,0 +1,96 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /
+
+spring:
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/dazhuangyuan?useUnicode=true&characterEncoding=utf8mb4&serverTimezone=Asia/Shanghai&useSSL=false&allowPublicKeyRetrieval=true
+    username: root
+    password: ${DB_PASSWORD:root123456}
+    druid:
+      initial-size: 5
+      min-idle: 5
+      max-active: 20
+      max-wait: 60000
+      time-between-eviction-runs-millis: 60000
+      min-evictable-idle-time-millis: 300000
+      validation-query: SELECT 1
+      test-while-idle: true
+      test-on-borrow: false
+      test-on-return: false
+
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: Asia/Shanghai
+
+  servlet:
+    multipart:
+      max-file-size: 50MB
+      max-request-size: 100MB
+
+mybatis-plus:
+  mapper-locations: classpath:mapper/*.xml
+  type-aliases-package: com.dazhuangyuan.entity
+  configuration:
+    map-underscore-to-camel-case: true
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  global-config:
+    db-config:
+      id-type: auto
+      logic-delete-field: deleted
+      logic-delete-value: 1
+      logic-not-delete-value: 0
+
+# JWT配置
+jwt:
+  secret: DazhuangyuanGaokaoVolunteerSystemSecretKey2024!@#$%^&*
+  expiration: 604800000  # 7天（毫秒）
+  header: Authorization
+  prefix: Bearer
+
+# 文件上传
+file:
+  upload-path: ./uploads/
+  access-path: /uploads/**
+
+# 短信配置（阿里云SMS）
+sms:
+  access-key-id: ${SMS_ACCESS_KEY_ID:your-access-key}
+  access-key-secret: ${SMS_ACCESS_KEY_SECRET:your-secret}
+  sign-name: ${SMS_SIGN_NAME:大状元}
+  template-code: ${SMS_TEMPLATE_CODE:SMS_123456789}
+  expire-minutes: 5
+  interval-seconds: 60
+
+# 微信支付配置
+wechat:
+  pay:
+    app-id: ${WX_PAY_APP_ID:your-app-id}
+    mch-id: ${WX_PAY_MCH_ID:your-mch-id}
+    api-v3-key: ${WX_PAY_API_V3_KEY:your-api-key}
+    private-key-path: ${WX_PAY_PRIVATE_KEY_PATH:./cert/wechat_pay.pem}
+    serial-number: ${WX_PAY_SERIAL_NUMBER:your-serial}
+    notify-url: ${WX_PAY_NOTIFY_URL:https://yourdomain.com/api/pay/notify/wechat}
+
+# 支付宝配置
+alipay:
+  app-id: ${ALIPAY_APP_ID:your-app-id}
+  private-key: ${ALIPAY_PRIVATE_KEY:your-private-key}
+  public-key: ${ALIPAY_PUBLIC_KEY:your-public-key}
+  notify-url: ${ALIPAY_NOTIFY_URL:https://yourdomain.com/api/pay/notify/alipay}
+  return-url: ${ALIPAY_RETURN_URL:https://yourdomain.com/pay/result}
+  sandbox: false
+
+# 联系方式配置（运营用）
+contact:
+  phone: 13800138000
+  wechat: dazhuangyuan_vip
+  qr-code-url: /static/img/wechat_qr.png
+
+logging:
+  level:
+    com.dazhuangyuan: debug
+    com.baomidou.mybatisplus: debug
