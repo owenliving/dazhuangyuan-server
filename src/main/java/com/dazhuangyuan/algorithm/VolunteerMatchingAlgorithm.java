@@ -95,7 +95,7 @@ public class VolunteerMatchingAlgorithm {
         for (CollegeMajorGroup group : matchedGroups) {
             // 获取该专业组的历年录取数据
             List<AdmissionData> groupAdmissions = getGroupAdmissions(
-                    group.getCollegeId(), group.getId(), province, category, years, batch);
+                    group.getCollegeId().longValue(), group.getId(), province, category, years, batch);
 
             if (groupAdmissions.isEmpty()) {
                 continue;
@@ -106,10 +106,10 @@ public class VolunteerMatchingAlgorithm {
             if (weightedResult == null) continue;
 
             // 计算匹配度和录取概率
-            MatchResult matchResult = calculateMatch(studentRank, weightedResult, group.getCollegeId());
+            MatchResult matchResult = calculateMatch(studentRank, weightedResult, group.getCollegeId().longValue());
 
             // 获取专业组下的专业
-            List<Major> groupMajors = getGroupMajors(group.getCollegeId(), group.getId(), group.getYear());
+            List<Major> groupMajors = getGroupMajors(group.getCollegeId().longValue(), group.getId(), group.getYear());
 
             // 获取院校信息
             College college = collegeMapper.selectById(group.getCollegeId());
