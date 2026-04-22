@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * 专业查询控制器
@@ -59,7 +60,7 @@ public class MajorController {
         LambdaQueryWrapper<Major> wrapper = new LambdaQueryWrapper<>();
         wrapper.select(Major::getCategory).groupBy(Major::getCategory).isNotNull(Major::getCategory);
         List<Major> list = majorMapper.selectList(wrapper);
-        return Result.ok(list.stream().map(Major::getCategory).distinct().toList());
+        return Result.ok(list.stream().map(Major::getCategory).distinct().collect(Collectors.toList()));
     }
 
     @GetMapping("/hot")

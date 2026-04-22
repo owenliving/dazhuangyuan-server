@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * 广告/运营位控制器
@@ -42,7 +43,7 @@ public class AdController {
                     if (ad.getEndAt() != null && now.isAfter(ad.getEndAt())) return false;
                     return true;
                 })
-                .toList();
+                .collect(Collectors.toList());
 
         return Result.ok(list);
     }
