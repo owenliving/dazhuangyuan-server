@@ -9,4 +9,5 @@ FROM eclipse-temurin:11-jre
 WORKDIR /app
 COPY --from=build /app/target/dazhuangyuan.jar .
 EXPOSE 8080
-CMD ["java", "-jar", "dazhuangyuan.jar"]
+ENV PORT=8080
+CMD ["sh", "-c", "java $JAVA_OPTS -jar dazhuangyuan.jar"]
