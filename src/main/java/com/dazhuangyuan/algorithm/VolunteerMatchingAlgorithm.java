@@ -73,9 +73,11 @@ public class VolunteerMatchingAlgorithm {
                 studentScore, studentRank, subjects, category, province, batch, strategy, maxTotal);
 
         // Step 1: 如果没有位次，根据分数推算位次
-        if (studentRank == null || studentRank <= 0) {
-            studentRank = estimateRank(province, studentScore, category);
-            log.info("根据分数推算位次: {} -> {}", studentScore, studentRank);
+        Long rankLong = studentRank != null ? studentRank.longValue() : null;
+        if (rankLong == null || rankLong <= 0) {
+            Integer estimated = estimateRank(province, studentScore, category);
+            rankLong = estimated != null ? estimated.longValue() : (long)(studentScore * 1000);
+            log.info("根据分数推算位次: {} -> {}", studentScore, rankLong);
         }
 
         // Step 2: 获取近3年的录取数据
@@ -106,7 +108,7 @@ public class VolunteerMatchingAlgorithm {
             if (weightedResult == null) continue;
 
             // 计算匹配度和录取概率
-            MatchResult matchResult = calculateMatch(studentRank, weightedResult, group.getCollegeId().longValue());
+            MatchResult matchResult = calculateMatch(rankLong, weightedResult, group.getCollegeId().longValue());
 
             // 获取专业组下的专业
             List<Major> groupMajors = getGroupMajors(group.getCollegeId().longValue(), group.getId(), group.getYear());
